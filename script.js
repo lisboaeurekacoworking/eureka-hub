@@ -21,6 +21,11 @@ function renderizarPerfis(lista) {
   for (const perfil of lista) {
     const card = document.createElement("div");
     card.textContent = perfil.nome + " - " + perfil.area;
+
+    card.addEventListener("click", function () {
+      mostrarDetalhe(perfil);
+    });
+
     listaPerfis.appendChild(card);
   }
 }
@@ -44,3 +49,17 @@ inputBusca.addEventListener("input", function () {
   const filtrados = filtrarPorLetra(perfis, texto);
   renderizarPerfis(filtrados);
 });
+
+const divDetalhe = document.getElementById("detalhePerfil");
+
+function mostrarDetalhe(perfil) {
+  divDetalhe.innerHTML = "";
+
+  const nomeEl = document.createElement("h2");
+  nomeEl.textContent = perfil.nome;
+  divDetalhe.appendChild(nomeEl);
+
+  const infoEl = document.createElement("p");
+  infoEl.textContent = perfil.cidade + " - " + perfil.area;
+  divDetalhe.appendChild(infoEl);
+}
