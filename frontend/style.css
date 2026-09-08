@@ -1,0 +1,47 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  padding: 24px;
+}
+
+#inputBusca {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #d9d9d9;
+  margin-bottom: 16px;
+}
+
+#listaPerfis {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card-perfil {
+  background: white;
+  padding: 14px;
+  border-radius: 8px;
+  border: 1px solid #d9d9d9;
+  cursor: pointer;
+}
+
+.card-perfil:hover {
+  background: #fff9d6;
+}
+
+#detalhePerfil {
+  margin-top: 20px;
+  padding: 16px;
+  background: white;
+  border-radius: 8px;
+}
+
+button {
+  background: #ffde16;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
