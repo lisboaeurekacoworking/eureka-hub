@@ -9,9 +9,24 @@ app.use(cors());
 app.use(express.json());
 
 const perfis = [
-  { nome: "Marina", cidade: "São Paulo", area: "UX Design" },
-  { nome: "Tiago", cidade: "Lisboa", area: "Growth" },
-  { nome: "Carla", cidade: "São Paulo", area: "Branding" },
+  {
+    nome: "Marina",
+    cidade: "São Paulo",
+    area: "UX Design",
+    email: "luizaccarneiro+marina@gmail.com",
+  },
+  {
+    nome: "Tiago",
+    cidade: "Lisboa",
+    area: "Growth",
+    email: "luizaccarneiro+tiago@gmail.com",
+  },
+  {
+    nome: "Carla",
+    cidade: "São Paulo",
+    area: "Branding",
+    email: "luizaccarneiro+carla@gmail.com",
+  },
 ];
 
 app.get("/", function (requisicao, resposta) {
@@ -36,7 +51,7 @@ app.post("/interesse", function (requisicao, resposta) {
 
   const opcoesEmail = {
     from: process.env.GMAIL_USER,
-    to: process.env.GMAIL_USER,
+    to: perfil.email,
     subject: "Novo interesse no Eureka Hub",
     text:
       "Alguém demonstrou interesse no perfil de " +
