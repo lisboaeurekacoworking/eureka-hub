@@ -70,10 +70,23 @@ function mostrarDetalhe(perfil) {
 
   const botaoInteresse = document.createElement("button");
   botaoInteresse.textContent = "Tenho interesse";
-  botaoInteresse.addEventListener("click", function () {
-    const confirmacao = document.createElement("p");
-    confirmacao.textContent = "E-mail enviado para " + perfil.nome + "!";
-    divDetalhe.appendChild(confirmacao);
-  });
   divDetalhe.appendChild(botaoInteresse);
+
+  botaoInteresse.addEventListener("click", function () {
+    fetch("http://localhost:3000/interesse", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(perfil),
+    })
+      .then(function (resposta) {
+        return resposta.json();
+      })
+      .then(function (dados) {
+        const confirmacao = document.createElement("p");
+        confirmacao.textContent = dados.sucesso
+          ? "E-mail enviado para " + perfil.nome + "!"
+          : "Não foi possível enviar o e-mail, tenta outra vez.";
+        divDetalhe.appendChild(confirmacao);
+      });
+  });
 }
