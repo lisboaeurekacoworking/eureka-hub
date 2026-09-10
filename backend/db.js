@@ -1,6 +1,6 @@
+const path = require("path");
 const Database = require("better-sqlite3");
-
-const db = new Database("eureka.db");
+const db = new Database(path.join(__dirname, "eureka.db"));
 
 db.exec(`
   CREATE TABLE IF NOT EXISTS perfis (
@@ -10,6 +10,14 @@ db.exec(`
     area TEXT,
     email TEXT,
     pontos INTEGER
+  )
+`);
+
+db.exec(`
+  CREATE TABLE IF NOT EXISTS eventos (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    tipo TEXT,
+    criado_em TEXT DEFAULT CURRENT_TIMESTAMP
   )
 `);
 

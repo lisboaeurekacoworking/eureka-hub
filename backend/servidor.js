@@ -7,6 +7,8 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+const path = require("path");
+app.use(express.static(path.join(__dirname, "..", "frontend")));
 
 const db = require("./db");
 
@@ -49,6 +51,7 @@ app.get("/perfis/cidade/:cidade", function (requisicao, resposta) {
 
 app.post("/interesse", function (requisicao, resposta) {
   const perfil = requisicao.body;
+  db.prepare("INSERT INTO eventos (tipo) VALUES (?)").run("interesse");
 
   const opcoesEmail = {
     from: process.env.GMAIL_USER,
@@ -72,6 +75,18 @@ app.post("/interesse", function (requisicao, resposta) {
       resposta.json({ sucesso: true });
     }
   });
+});
+
+app.post("/metricas/busca", function (requisicao, resposta) {
+  db.prepare("INSERT INTO eventos (tipo) VALUES (?)").run("busca");
+  resposta.json({ sucesso: true });
+});
+
+app.get("/metricas", function (requisicao, resposta) {
+  const contagens = db
+    .prepare("SELECT tipo, COUNT(*) AS total FROM eventos GROUP BY tipo")
+    .all();
+  resposta.json(contagens);
 });
 
 app.listen(3000, function () {
