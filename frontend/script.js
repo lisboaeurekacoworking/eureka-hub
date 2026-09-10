@@ -54,6 +54,10 @@ inputBusca.addEventListener("input", function () {
   const texto = inputBusca.value;
   const filtrados = filtrarPorTermo(perfis, texto);
   renderizarPerfis(filtrados);
+
+  if (texto !== "") {
+    fetch("http://localhost:3000/metricas/busca", { method: "POST" });
+  }
 });
 
 const divDetalhe = document.getElementById("detalhePerfil");
