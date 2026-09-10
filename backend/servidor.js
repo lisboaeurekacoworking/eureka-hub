@@ -8,32 +8,15 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const perfis = [
-  {
-    nome: "Marina",
-    cidade: "São Paulo",
-    area: "UX Design",
-    email: "luizaccarneiro+marina@gmail.com",
-  },
-  {
-    nome: "Tiago",
-    cidade: "Lisboa",
-    area: "Growth",
-    email: "luizaccarneiro+tiago@gmail.com",
-  },
-  {
-    nome: "Carla",
-    cidade: "São Paulo",
-    area: "Branding",
-    email: "luizaccarneiro+carla@gmail.com",
-  },
-];
+const db = require("./db");
 
 app.get("/", function (requisicao, resposta) {
   resposta.send("Eureka Hub backend está a funcionar!");
 });
 
 app.get("/perfis", function (requisicao, resposta) {
+  const consulta = db.prepare("SELECT * FROM perfis");
+  const perfis = consulta.all();
   resposta.json(perfis);
 });
 
@@ -44,6 +27,24 @@ const transporter = nodemailer.createTransport({
     user: process.env.GMAIL_USER,
     pass: process.env.GMAIL_APP_PASSWORD,
   },
+});
+
+app.get("/perfis/:nome", function (requisicao, resposta) {
+  const nomeBuscado = requisicao.params.nome;
+  const consulta = db.prepare(
+    "SELECT * FROM perfis WHERE nome = ? COLLATE NOCASE",
+  );
+  const perfilEncontrado = consulta.get(nomeBuscado);
+  resposta.json(perfilEncontrado);
+});
+
+app.get("/perfis/cidade/:cidade", function (requisicao, resposta) {
+  const cidadeBuscada = requisicao.params.cidade;
+  const consulta = db.prepare(
+    "SELECT * FROM perfis WHERE cidade = ? COLLATE NOCASE",
+  );
+  const perfisEncontrados = consulta.all(cidadeBuscada);
+  resposta.json(perfisEncontrados);
 });
 
 app.post("/interesse", function (requisicao, resposta) {

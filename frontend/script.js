@@ -7,7 +7,8 @@ function renderizarPerfis(lista) {
   for (const perfil of lista) {
     const card = document.createElement("div");
     card.className = "card-perfil";
-    card.textContent = perfil.nome + " - " + perfil.area;
+    card.textContent =
+      perfil.nome + " - " + perfil.area + " (" + perfil.pontos + " pontos)";
 
     card.addEventListener("click", function () {
       mostrarDetalhe(perfil);
